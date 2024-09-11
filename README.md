@@ -1,4 +1,41 @@
 # ORB-SLAM3
+### How to run
+- Build docker image
+  ```
+  cd /path/to/Dockerfile
+  docker build -t orb_slam3:v1.0 .
+  ```
+- Run container
+  ```
+  docker run -it --privileged --gpus all --net=host --ipc=host \
+  -e "DISPLAY=$DISPLAY" \
+  -e "QT_X11_NO_MITSHM=1" \
+  -e NVIDIA_DRIVER_CAPABILITIES=all \
+  -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  -v "/your/dataset/path:/dataset" \
+  orb_slam3:v1.0
+  ```
+- Run ORB-SLAM3
+  ```
+  # At the Study_ORB_SLAM3 directory
+  ./<exec_script> <vocab path> <setting path(yaml)> <dataset path> <timestamp path>
+  ```
+  e.g)
+  ```
+  ./Examples/Stereo-Inertial/stereo_inertial_euroc Vocabulary/ORBvoc.txt Examples/Stereo-Inertial/EuRoC.yaml ../dataset/EuRoC/MH_03_medium/ Examples/Stereo-Inertial/EuRoC_TimeStamps/MH03.txt
+  ```
+- Evaluate
+  ```
+  # At the Study_ORB_SLAM3 directory
+  ./python2.7 <eval_code_path> <gt_path> <trajectory.txt path> --plot <pdf name>
+  ```
+  e.g)
+  ```
+  python2.7 evaluation/evaluate_ate_scale.py evaluation/Ground_truth/EuRoC_left_cam/MH01_GT.txt KeyFrameTrajectory.txt --plot MH01_stereo.pdf
+  ```
+<details>
+<summary>Original `README.md`</summary>
+
 
 ### V1.0, December 22th, 2021
 **Authors:** Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, [José M. M. Montiel](http://webdiis.unizar.es/~josemari/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/).
@@ -233,3 +270,7 @@ A flag in `include\Config.h` activates time measurements. It is necessary to unc
 
 # 9. Calibration
 You can find a tutorial for visual-inertial calibration and a detailed description of the contents of valid configuration files at  `Calibration_Tutorial.pdf`
+
+</details>
+
+
